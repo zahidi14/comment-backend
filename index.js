@@ -17,7 +17,7 @@ fs.readFile("db.json", "utf8", (err, data) => {
 
 console.log({ ceck: comment });
 
-app.get("/comments", (req, res) => {
+app.get("/", (req, res) => {
   res.json(comment);
 });
 app.listen(PORT, () => {
