@@ -12,15 +12,16 @@ fs.readFile("db.json", "utf8", (err, data) => {
     console.log("error get json");
   } else {
     comment = JSON.parse(data);
-    coki = data;
   }
 });
 
 console.log({ ceck: comment });
-console.log({ data: coki });
+
 app.get("/comments", (req, res) => {
   res.json(comment);
 });
 app.listen(PORT, () => {
   console.log("conneccted");
 });
+
+module.exports = app;
