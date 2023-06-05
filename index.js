@@ -1,9 +1,10 @@
 const express = require("express");
-
+const cors = require("cors");
 const app = express();
 const connect = require("./conect");
 
 const mongoose = require("mongoose");
+app.use(cors());
 connect();
 const PORT = 5000;
 app.use(express.json());
