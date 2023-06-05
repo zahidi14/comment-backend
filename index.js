@@ -1,24 +1,73 @@
 const express = require("express");
-const bodypars = require("body-parser");
-const fs = require("fs");
-const app = express();
 
+const app = express();
+const connect = require("./conect");
+
+const mongoose = require("mongoose");
+connect();
 const PORT = 5000;
-app.use(bodypars.json());
-let comment = [];
-let coki = [];
-fs.readFile("db.json", "utf8", (err, data) => {
-  if (err) {
-    console.log("error get json");
-  } else {
-    comment = JSON.parse(data);
+app.use(express.json());
+const commScheme = new mongoose.Schema({
+  currentUser: {
+    image: {
+      png: { type: String },
+      webp: { type: String },
+    },
+    username: { type: String },
+  },
+  comments: [
+    {
+      id: { type: Number },
+      content: { type: String },
+      createdAt: { type: String },
+      score: { type: Number },
+      user: {
+        image: {
+          png: { type: String },
+          webp: { type: String },
+        },
+        username: { type: String },
+      },
+      replies: [
+        {
+          content: { type: String },
+          createdAt: { type: String },
+          score: { type: Number },
+          replyingTo: { type: String },
+          user: {
+            image: {
+              png: { type: String },
+              webp: { type: String },
+            },
+            username: { type: String },
+          },
+        },
+      ],
+    },
+  ],
+});
+
+const Comment = mongoose.model("commentsection", commScheme);
+
+app.get("/comments", async (req, res) => {
+  try {
+    const comment = await Comment.find();
+    res.json(comment);
+  } catch (error) {
+    console.error("Error retrieving comments:", error);
+    res.status(500).json({ message: "Error retrieving comments" });
   }
 });
 
-console.log({ ceck: comment });
-
-app.get("/", (req, res) => {
-  res.json(comment);
+app.post("/comments", async (req, res) => {
+  try {
+    const comment = await Comment.create(req.body);
+    res.status(201).json(comment);
+    console.log({ comment: comment });
+  } catch (error) {
+    console.error("Error creating comment:", error);
+    res.status(500).json({ message: "Error creating comment" });
+  }
 });
 app.listen(PORT, () => {
   console.log("conneccted");
