@@ -1,6 +1,6 @@
 require("dotenv").config();
 const connect = () => {
-  const mongo = process.env.URI;
+  const mongo = "mongodb+srv://zahidi:12qwerty@merndb.l61ga.mongodb.net/";
 
   const mongose = require("mongoose");
 
