@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const port = 5000;
 const jsonServer = require("json-server");
-const jsonServerRouter = jsonServer.router("db.json");
+const jsonServerRouter = jsonServer.router("./db.json");
 const jsonServerMiddlewares = jsonServer.defaults();
 
 app.use("/", jsonServerRouter, jsonServerMiddlewares);
