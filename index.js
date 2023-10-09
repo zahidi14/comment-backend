@@ -5,7 +5,7 @@ const jsonServer = require("json-server");
 const jsonServerRouter = jsonServer.router("db.json");
 const jsonServerMiddlewares = jsonServer.defaults();
 
-app.use("/comment", jsonServerRouter, jsonServerMiddlewares);
+app.use("/", jsonServerRouter, jsonServerMiddlewares);
 
 app.use(express.json());
 
